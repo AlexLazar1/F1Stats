@@ -1,2 +1,4 @@
 rsconnect
 shiny
+shinydashboard
+leaflet

@@ -2,8 +2,8 @@
 sidebar <- dashboardSidebar(
   sidebarMenu(id="tabs",
               menuItem("World Map", tabName="tab_map", icon=icon("map")),
-              menuItem("Table import", tabName = "table", icon=icon("table"), selected=TRUE),
-              menuItem("Codes",  icon = icon("file-text-o"),
+              menuItem("Table import", tabName = "table", icon=icon("table")),
+              menuItem("Codes",
                        menuSubItem("global.R", tabName = "global", icon = icon("angle-right")),
                        menuSubItem("ui.R", tabName = "ui", icon = icon("angle-right")),
                        menuSubItem("server.R", tabName = "server", icon = icon("angle-right")),
@@ -21,6 +21,32 @@ body <- dashboardBody(
               tags$iframe(src = './readme.html', 
                           width = '100%', height = '800px', 
                           frameborder = 0, scrolling = 'auto'
+              )
+            )
+    ),
+    tabItem(tabName = "tab_map",
+            fluidPage(
+              fluidRow(
+                column(
+                  width = 6,
+                  sliderInput(
+                    inputId = "year",
+                    label = "Choose Year:",
+                    min = min(races$year),
+                    max = max(races$year),
+                    value = 2023,
+                    sep = '',
+                    width = "100%"
+                  )
+                ),
+                column(
+                  width = 2,
+                  actionButton(inputId = "minus_button", label = "-"),
+                  actionButton(inputId = "plus_button", label = "+")
+                )
+              ),
+              fluidRow(
+                leafletOutput("map", height = "600px")
               )
             )
     )
